@@ -159,14 +159,18 @@
 										<div class="product-card__buttons">
 											
 											@if( $product->quantity == 0 )
-											<button class="btn btn-primary product-card__addtocart" type="button" disabled >Add To Cart</button>
+											<button class="btn btn-primary product-card__addtocart addCart"
+											data-id="{{ $product->id }}" data-name="{{ $product->title }}" data-image="{{ $product->images[0]->image }}"  
+											type="button" disabled >Add To Cart</button>
 											@else
 											
 											<input type="hidden" name="product_id" id="product_id" value="{{ $product->id }}" >
-											<button type="submit" class="btn btn-primary product-card__addtocart addCart" onclick="addToCart({{ $product->id }})"  >Add To Cart</button>
-											
-											
-											
+											<button type="submit" class="btn btn-primary product-card__addtocart addCart"
+											data-id="{{ $product->id }}" data-name="{{ $product->title }}" data-image="{{ $product->images[0]->image }}"  
+											>
+											Add To Cart
+											</button>
+
 											@endif
 										</div>
 									</div>

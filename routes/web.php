@@ -296,13 +296,9 @@ Route::get('/category/{category:slug}', 'Frontend\CategoryController@show')->nam
 
 
 //cart route
-Route::group(['prefix'=> 'cart'], function(){
-	Route::get('/','Frontend\CartsController@index')->name('cart.show');
-	Route::get('/getDataTable','Frontend\CartsController@get')->name('cart.get');
-	Route::post('/store','Frontend\CartsController@store')->name('cart.store');
-	Route::post('/update/{cart:slug}','Frontend\CartsController@update')->name('cart.update');
-	Route::post('/destroy/{cart:id}','Frontend\CartsController@destroy')->name('cart.destroy');
-});
+Route::post('/cart','Frontend\CartsController@cartStore')->name('cartStore');
+Route::get('/get_cart','Frontend\CartsController@get_cart')->name('get_cart');
+Route::delete('/delete_cart/{id}','Frontend\CartsController@delete_cart')->name('delete_cart');
 
 
 

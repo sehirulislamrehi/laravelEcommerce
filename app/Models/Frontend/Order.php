@@ -22,8 +22,5 @@ class Order extends Model
     public function visitor(){
         return $this->belongsTo(Visitor::class);
     }
-    public function carts(){
-        return $this->belongsTo(Cart::class);
-    }
 
 }

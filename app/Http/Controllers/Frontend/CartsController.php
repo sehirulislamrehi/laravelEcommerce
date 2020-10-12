@@ -9,6 +9,7 @@ use App\Models\Frontend\Order;
 use Auth;
 use App\Http\Resources\CartResource;
 use App\Http\Resources\CartCollection;
+use App\Models\Backend\Product;
 
 class CartsController extends Controller
 {
@@ -17,125 +18,60 @@ class CartsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function cartStore(Request $request)
     {   
-        
-        return view('frontend.pages.cart');
-       
+        $id = $request->id;
+        $product = Product::find($id);
+
+        $cart = [
+            'id' => $product->id,
+            'name' => $product->title,
+            'image' => $product->images[0]->image,
+            'qty' => 1,
+            'price' => $product->regular_price ? $product->regular_price : $product->offer_price,
+            'total' => $product->regular_price ? $product->regular_price : $product->offer_price,
+        ];
+
+        $newCart = [];
+
+        $exists = false;
+        if( $request->session()->get('cart') ):
+            $sessionCart = $request->session()->get('cart');
+
+            foreach( $sessionCart as $singleCart ):
+                if( $singleCart['id'] == $cart['id'] ):
+                    $singleCart['qty']++;
+                    $singleCart['total'] = $cart['price'] * $singleCart['qty'];
+                    $exists = true;
+                endif;
+                array_push($newCart, $singleCart);
+            endforeach;
+            if( !$exists ):
+                array_push($newCart, $cart);
+            endif;
+        else:
+            array_push($newCart, $cart);
+        endif;
+       $request->session()->put('cart', $newCart);
+       return $request->session()->get('cart');
     }
 
-    public function get(){
-        $cart = Cart::orderBy('id', 'asc')->get();
-        return view('frontend.pages.cart.getCarts', compact('cart'));
+    public function get_cart(Request $request){
+       return $request->session()->get('cart');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+    public function delete_cart(Request $request, $id){
+        $carts = $request->session()->get('cart');
+        $newCart = [];
+        if( $carts ):
+            foreach( $carts as $cart):
+                if( $cart['id'] != $id ){
+                    array_push($newCart, $cart);
+                }
+            endforeach;
+        endif;
+        $request->session()->put('cart', $newCart);
+        return $request->session()->get('cart');
     }
 
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        $this->validate($request, [
-            'product_id' => 'required',
-        ],
-        [
-            'product_id.required' => 'Please choose your product',
-        ]);
-
-       
-        if( Auth::check() ){
-            $cart = CART::where('visitors_id', Auth('visitor')->user()->id )->where('product_id', $request->product_id)->first();
-        }
-        else{
-            $cart = CART::where('ip_address', request()->ip() )->where('product_id', $request->product_id)->first();
-        }
-
-        if( !is_null($cart) ){
-            $cart->increment('product_quantity');
-        }
-        else{
-            $cart = new Cart();
-            if( Auth::check() ){
-                $cart->visitors_id = Auth('visitor')->user()->id; 
-            }
-            else{
-                $cart->ip_address = request()->ip();
-                $cart->product_id = $request->product_id;
-                $cart->save();
-            }
-            
-        }
-        if(  Auth::check() ){
-            $carts = Cart::where('visitors_id', Auth('visitor')->user()->id )->where('order_id', NULL)->with('product')->get() ;
-        }
-        else{
-            $carts =   Cart::where('ip_address', request()->ip() )->where('order_id', NULL)->get();
-        }
-        return response()->json(['status' => 'success', 'Message' => 'Item Added To Cart', 'totalItems' => new CartCollection($carts), 'totalNumber' => Cart::totalItems() ], 200);
-       
-       
-        
-
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Cart $cart)
-    {
-        if( !is_null($cart) ){
-            $cart->delete();
-        }
-        return back();
-    }
 }
