@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Models\Backend\Category;
-
+use Illuminate\Support\Facades\Auth;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -168,6 +168,15 @@ Route::group([ 'prefix' => '/admin' ], function(){
 		Route::post('/delete/{id}','Backend\AdController@destroy')->name('deleteAd');
 	});
 	// ad route end
+
+
+	//ajax crud
+	Route::group(['prefix'=>'/ajax-crud'], function(){
+		Route::get('/manage','Backend\AjaxController@index')->name('ajax.crud.all');
+		Route::get('/data','Backend\AjaxController@all_data')->name('ajax.data');
+		Route::post('/add','Backend\AjaxController@store')->name('ajax.crud.add');
+	});
+	//ajax crud end
 
 });
 

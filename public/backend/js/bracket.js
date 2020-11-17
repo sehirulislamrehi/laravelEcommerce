@@ -375,3 +375,49 @@ $("#deleteAd").submit(function(e){
   })
   
 })
+
+
+
+
+
+
+
+
+
+$(document).ready(function(){
+  $(document).on('submit','.ajax-form', function(event){
+    event.preventDefault();
+
+    let $this = $(this);
+    $this.find(".has-danger").removeClass('has-error');
+    $this.find(".form-error").remove();
+
+    var formData = new FormData(this);
+
+    $.ajax({
+      type: $this.attr('method'),
+      url: $this.attr('action'),
+      data: formData,
+      
+      success: function(response){
+          swal("","Data Inserted Successfully","success")
+          // $("input[type=text]").val('');
+          // $("input[type=email]").val('');
+          // $("textarea").val('');
+      },
+      error: function(response){
+        let data = response.responseJSON
+        
+        $.each(data.errors,function(key,value){
+          $("[name^="+key+"]").parent().addClass('has-danger');
+          $("[name^="+key+"]").parent().append('<p class="form-error"><small class="color-red text-muted">'+ value[0] +'</small></p>')
+          
+        });
+      },
+      cache: false,
+        contentType: false,
+        processData: false,
+    })
+
+  })
+})

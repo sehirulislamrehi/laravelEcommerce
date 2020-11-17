@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use App\Models\Backend\Category;
+use Illuminate\Support\Facades\Schema;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -25,7 +26,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        // $pCategories = Category::orderBy('id', 'asc')->where('parent_id',0)->get();
-        View::share('pCategories', Category::orderBy('id', 'asc')->where('parent_id',0)->get());
+        Schema::defaultStringLength(191);
     }
 }

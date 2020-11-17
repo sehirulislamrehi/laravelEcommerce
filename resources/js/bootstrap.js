@@ -1,5 +1,8 @@
 window._ = require('lodash');
 
+require('datatables.net-bs4');
+require('datatables.net-buttons-bs4');
+
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
  * for JavaScript based Bootstrap features such as modals and tabs. This

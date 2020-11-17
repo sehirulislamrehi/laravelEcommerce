@@ -115,6 +115,15 @@
         </li>
         <!-- district end -->
 
+        <!-- district start -->
+        <li class="br-menu-item">
+          <a href="{{ route('ajax.crud.all') }}" class="br-menu-link">
+            <i class="menu-item-icon icon ion-ios-photos-outline tx-20"></i>
+            <span class="menu-item-label">Ajax Crud</span>
+          </a><!-- br-menu-link -->
+        </li>
+        <!-- district end -->
+
 
         <!--<li class="br-menu-item">
           <a href="pages.html" class="br-menu-link">

@@ -19,6 +19,8 @@
     <!-- axios -->
     <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
 
+    <script src="{{ asset('backend/js/datatable.min.js') }}"></script>
+
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
     <script src="{{ asset('backend/lib/datatables.net/js/jquery.dataTables.min.js') }}"></script>

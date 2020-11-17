@@ -16,11 +16,11 @@ class FrontendController extends Controller
 {   
     public function home(){
         $feature_products   = Product::orderBy('id','asc')->where('is_featured',1)->get();
-        // $pCategories = Category::orderBy('id', 'asc')->where('parent_id',0)->get();
+        $pCategories = Category::orderBy('id', 'asc')->where('parent_id',0)->get();
         $banners = Banner::orderBy('id', 'desc')->get();
 
         return view('frontend.pages.index', compact(
-            'feature_products', 'banners'
+            'feature_products', 'banners','pCategories'
         ));
     }
     public function about(){
