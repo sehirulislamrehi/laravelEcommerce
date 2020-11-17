@@ -400,6 +400,7 @@ $(document).ready(function(){
       data: formData,
       
       success: function(response){
+          $('#datatable').DataTable().ajax.reload();
           swal("","Data Inserted Successfully","success")
           // $("input[type=text]").val('');
           // $("input[type=email]").val('');
@@ -407,7 +408,7 @@ $(document).ready(function(){
       },
       error: function(response){
         let data = response.responseJSON
-        
+        $('#datatable').DataTable().ajax.reload();
         $.each(data.errors,function(key,value){
           $("[name^="+key+"]").parent().addClass('has-danger');
           $("[name^="+key+"]").parent().append('<p class="form-error"><small class="color-red text-muted">'+ value[0] +'</small></p>')

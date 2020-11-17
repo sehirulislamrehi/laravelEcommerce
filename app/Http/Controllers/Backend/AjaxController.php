@@ -2,29 +2,27 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\DataTables\AjaxDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\Backend\Ajax;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\Response;
 
 class AjaxController extends Controller
-{   
+{
     public function index(Request $request){
-        $ajax = Ajax::latest()->get();
+        return view('backend.pages.ajax.manage');
+    }
 
-        if ($request->ajax()):
-            return DataTables::make($ajax)
+    public function all_data(Request $request){
+            $ajax = Ajax::query();
+            return DataTables::of($ajax->latest()->get())
+            ->rawColumns(['action'])
             ->addColumn('action',function(Ajax $ajax){
                 return 1;
             })
-            ->toJson();
-        endif;
-
-        return view('backend.pages.ajax.manage', compact('ajax'));
-        
+            ->make(true);
     }
-
     public function store(Request $request){
         $request->validate([
             'name' => 'required|unique:ajaxes,name,',
@@ -37,7 +35,7 @@ class AjaxController extends Controller
         $ajaxes->email = $request->email;
 
         if($ajaxes->save()):
-            return response()->json(['ajaxes'=>$ajaxes]);
+            return response()->json();
         endif;
     }
 }

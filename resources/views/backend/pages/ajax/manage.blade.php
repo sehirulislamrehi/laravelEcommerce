@@ -84,7 +84,7 @@
                                                        <input type="text" class="form-control" name="name" placeholder="Name">
                                                   </div>
                                                   <div class="form-group">
-                                                       <input type="email" class="form-control" name="email" placeholder="Email">
+                                                       <input type="text" class="form-control" name="email" placeholder="Email">
                                                   </div>
                                                   <div class="form-group">
                                                        <button type="submit" class="btn btn-success">Add</button>
@@ -109,7 +109,7 @@
                     <!-- category list item table start -->
                     <div class="col-md-12">
                          <div class="category_list_table table-responsive">
-                              <table class="table table-bordered ajax-datatable">
+                              <table class="table table-bordered ajax-datatable" id="datatable">
                                    <thead>
                                         <tr>
                                              <th>Name</th>
@@ -134,37 +134,37 @@
      <!-- main body content end -->
 
 
-@endsection
+     @endsection
 
-<link href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" rel="stylesheet">
-<link href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" rel="stylesheet">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>  
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
-<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+     <link href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" rel="stylesheet">
+     <link href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
+     <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+     <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
 
-<script type="text/javascript">
-  $(function () {
-    
-        $('.ajax-datatable').DataTable({
-        processing: true,
-        serverSide: true,
-        ajax: "{{ route('ajax.crud.all') }}",
-        columns: [
-            {data: 'name', name: 'name'},
-            {data: 'email', name: 'email'},
-            {
-                data: 'action', 
-                name: 'action', 
-                orderable: false, 
-            },
-        ]
-    });
+     <script type="text/javascript">
+          $(function() {
 
-          
-
-    
-    
-  });
-</script>
+                    $('.ajax-datatable').DataTable({
+                         processing: true,
+                         serverSide: true,
+                         ajax: "{{ route('ajax.data') }}",
+                         columns: [{
+                                   data: 'name',
+                                   name: 'name'
+                              },
+                              {
+                                   data: 'email',
+                                   name: 'email'
+                              },
+                              {
+                                   data: 'action',
+                                   name: 'action',
+                                   orderable: false,
+                              },
+                         ]
+                    });
+          });
+     </script>
