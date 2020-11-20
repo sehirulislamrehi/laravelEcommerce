@@ -176,6 +176,9 @@ Route::group([ 'prefix' => '/admin' ], function(){
 		Route::get('/data','Backend\AjaxController@all_data')->name('ajax.data');
 		Route::post('/add','Backend\AjaxController@store')->name('ajax.crud.add');
 		Route::get('/edit/{id}','Backend\AjaxController@edit')->name('ajax.crud.edit');
+		Route::post('/update/{id}','Backend\AjaxController@update')->name('ajax.crud.update');
+		Route::get('/delete/modal/{id}','Backend\AjaxController@delete_modal')->name('ajax.crud.delete_modal');
+		Route::post('/delete/{id}','Backend\AjaxController@delete')->name('ajax.crud.delete');
 	});
 	//ajax crud end
 

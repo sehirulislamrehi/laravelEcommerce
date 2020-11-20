@@ -6,15 +6,15 @@
           </button>
      </div>
      <div class="modal-body">
-          <form action="{{ route('ajax.crud.add') }}" class="ajax-form" method="post" enctype="multipart/form-data">
+          <form action="{{ route('ajax.crud.update', $ajax->id) }}" class="ajax-form" method="post" enctype="multipart/form-data">
                <div class="form-group">
                     <input type="text" class="form-control" value="{{ $ajax->name }}" name="name" placeholder="Name">
                </div>
                <div class="form-group">
-                    <input type="text" class="form-control" name="email" placeholder="Email">
+                    <input type="text" class="form-control" name="email" value="{{ $ajax->email }}" placeholder="Email">
                </div>
                <div class="form-group">
-                    <button type="submit" class="btn btn-success">Add</button>
+                    <button type="submit" class="btn btn-success">Update</button>
                </div>
           </form>
      </div>
