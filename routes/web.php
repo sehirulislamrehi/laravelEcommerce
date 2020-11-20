@@ -175,6 +175,7 @@ Route::group([ 'prefix' => '/admin' ], function(){
 		Route::get('/manage','Backend\AjaxController@index')->name('ajax.crud.all');
 		Route::get('/data','Backend\AjaxController@all_data')->name('ajax.data');
 		Route::post('/add','Backend\AjaxController@store')->name('ajax.crud.add');
+		Route::get('/edit/{id}','Backend\AjaxController@edit')->name('ajax.crud.edit');
 	});
 	//ajax crud end
 

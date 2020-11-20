@@ -21,45 +21,6 @@
           <!-- section wrapper start -->
           <div class="br-section-wrapper">
 
-
-
-               <div class="row">
-
-                    <!-- data insert flash message start -->
-                    <div class="col-md-12">
-                         @if( session()->has('create') )
-                         <div class="alert alert-success">
-                              <button type="button" class="close" data-dismiss="alert" aria-hidden="true"> &times; </button>
-                              {{ session()->get('create') }}
-                         </div>
-                         @endif
-                    </div>
-                    <!-- data insert flash message end -->
-
-                    <!-- data delete flash message start -->
-                    <div class="col-md-12">
-                         @if( session()->has('delete') )
-                         <div class="alert alert-success">
-                              <button type="button" class="close" data-dismiss="alert" aria-hidden="true"> &times; </button>
-                              {{ session()->get('delete') }}
-                         </div>
-                         @endif
-                    </div>
-                    <!-- data delete flash message end -->
-
-                    <!-- data update flash message start -->
-                    <div class="col-md-12">
-                         @if( session()->has('update') )
-                         <div class="alert alert-success">
-                              <button type="button" class="close" data-dismiss="alert" aria-hidden="true"> &times; </button>
-                              {{ session()->get('update') }}
-                         </div>
-                         @endif
-                    </div>
-                    <!-- data update flash message end -->
-
-               </div>
-
                <div class="row" style="margin-bottom: 30px;">
                     <div class="col-md-12">
                          <!-- add row start -->
@@ -147,24 +108,24 @@
      <script type="text/javascript">
           $(function() {
 
-                    $('.ajax-datatable').DataTable({
-                         processing: true,
-                         serverSide: true,
-                         ajax: "{{ route('ajax.data') }}",
-                         columns: [{
-                                   data: 'name',
-                                   name: 'name'
-                              },
-                              {
-                                   data: 'email',
-                                   name: 'email'
-                              },
-                              {
-                                   data: 'action',
-                                   name: 'action',
-                                   orderable: false,
-                              },
-                         ]
-                    });
+               $('.ajax-datatable').DataTable({
+                    processing: true,
+                    serverSide: true,
+                    ajax: "{{ route('ajax.data') }}",
+                    columns: [{
+                              data: 'name',
+                              name: 'name'
+                         },
+                         {
+                              data: 'email',
+                              name: 'email'
+                         },
+                         {
+                              data: 'action',
+                              name: 'action',
+                              orderable: false,
+                         },
+                    ]
+               });
           });
      </script>
